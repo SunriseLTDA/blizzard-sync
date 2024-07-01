@@ -1,0 +1,13 @@
+name: blizzard-sync
+version: '${version}'
+main: me.lucwsh.blizzardsync.Main
+api-version: '1.20'
+commands:
+  sync:
+    usage: "/sync"
+    aliases:
+      - "sincronizar"
+      - "sinc"
+      - "vincular"
+      - "vinculacao"
+      - "vincule"

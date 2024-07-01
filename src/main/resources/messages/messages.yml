@@ -1,0 +1,12 @@
+#  ____  _      _____ ____________         _____  _____
+#  |  _ \| |    |_   _|___  |___  /   /\   |  __ \|  __ \
+#  | |_) | |      | |    / /   / /   /  \  | |__) | |  | |
+#  |  _ <| |      | |   / /   / /   / /\ \ |  _  /| |  | |
+#  | |_) | |____ _| |_ / /__ / /__ / ____ \| | \ \| |__| |
+#  |____/|______|_____/_____/_____/_/    \_|_|  \_|_____/
+
+messages:
+
+  basic:
+    console-cannot: "&c&lERRO! &cApenas jogadores podem utilizar esse comando."
+    without-permission: "&c&lERRO! &cVocê não tem permissão."
