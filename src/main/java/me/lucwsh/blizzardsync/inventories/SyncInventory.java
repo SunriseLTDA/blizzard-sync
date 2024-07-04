@@ -1,5 +1,6 @@
 package me.lucwsh.blizzardsync.inventories;
 
+import me.lucwsh.blizzardsync.apis.SyncAPI;
 import me.lucwsh.blizzardsync.inventories.items.SyncItems;
 import me.lucwsh.blizzardsync.managers.FilesManager;
 import me.lucwsh.blizzardsync.utils.CustomHolder;
@@ -14,7 +15,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.List;
+
 public class SyncInventory implements Listener {
+
     public static void open(Player player) {
         Boolean allowInteraction = FilesManager.syncMenu.getBoolean("menu.allow-interaction");
         CustomHolder customHolder = new CustomHolder(allowInteraction);
@@ -27,14 +31,26 @@ public class SyncInventory implements Listener {
         Location location = player.getLocation();
         player.playSound(location, sound, 0.5F, 0.5F);
 
-
         int slotD = FilesManager.syncMenu.getInt("menu.items.discord.slot");
         int slotI = FilesManager.syncMenu.getInt("menu.items.info.slot");
-        int slotS= FilesManager.syncMenu.getInt("menu.items.sync.slot");
+        int slotS = FilesManager.syncMenu.getInt("menu.items.sync.slot");
+
+        SyncAPI api = new SyncAPI();
+        Boolean synced = api.isUserSynced(player);
+        String username = api.getAccount(player);
 
         inventory.setItem(slotD, SyncItems.discordItem());
-        inventory.setItem(slotI, SyncItems.infoItem());
-        inventory.setItem(slotS, SyncItems.syncItem());
+
+        ItemStack infoItem = SyncItems.infoItem();
+        ItemMeta infoMeta = infoItem.getItemMeta();
+        List<String> lore = infoMeta.getLore();
+        lore.replaceAll(line -> line.replace("{discord}", username));
+        infoMeta.setLore(lore);
+        infoItem.setItemMeta(infoMeta);
+
+        inventory.setItem(slotI, infoItem);
+
+        inventory.setItem(slotS, synced ? SyncItems.unSyncItem() : SyncItems.syncItem());
 
         player.openInventory(inventory);
     }
@@ -55,15 +71,20 @@ public class SyncInventory implements Listener {
         Player player = (Player) event.getWhoClicked();
 
         String inventoryName = event.getView().getTitle();
-
         String expectedDisplayName = FilesManager.syncMenu.getString("menu.name").replace("&", "§");
 
         if (inventoryName.equals(expectedDisplayName)) {
             int slot = event.getSlot();
+            int discordSlot = FilesManager.syncMenu.getInt("menu.items.discord.slot");
+            int syncSlot = FilesManager.syncMenu.getInt("menu.items.sync.slot");
 
-//            if (slot == ) {
-//
-//            }
+            if (slot == discordSlot) {
+                player.getOpenInventory().close();
+                player.performCommand("discord");
+            } else if (slot == syncSlot) {
+                player.getOpenInventory().close();
+                player.sendMessage("Digite seu nome de usuário do Discord no chat para receber uma mensagem de verificação.");
+            }
         }
     }
 }

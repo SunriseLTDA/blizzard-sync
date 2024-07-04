@@ -11,3 +11,7 @@ commands:
       - "vincular"
       - "vinculacao"
       - "vincule"
+  discord:
+    usage: "/discord"
+    aliases:
+      - "dc"

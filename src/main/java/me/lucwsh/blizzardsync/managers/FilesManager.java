@@ -13,9 +13,10 @@ public class FilesManager {
         try {
             loadMessages();
             loadLinkMenu();
+            loadDiscord();
             loadPermissions();
 
-            Bukkit.getConsoleSender().sendMessage("§a[Sync] §fIn total, [6] files were loaded successfully!");
+            Bukkit.getConsoleSender().sendMessage("§a[Sync] §fIn total, [4] files were loaded successfully!");
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -45,6 +46,15 @@ public class FilesManager {
 
     public static void loadPermissions() {
         permissions = FilesUtil.createFile(Main.instance, "permissions.yml", false);
+    }
+
+    // Discord
+
+    public static YamlConfiguration discord;
+    public static YamlConfiguration roles;
+
+    public static void loadDiscord() {
+        discord = FilesUtil.createFile(Main.instance, "discord.yml", false);
     }
 
 }

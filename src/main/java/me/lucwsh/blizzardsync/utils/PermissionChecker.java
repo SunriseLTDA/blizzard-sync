@@ -11,7 +11,7 @@ public class PermissionChecker {
             Location location = player.getLocation();
             Sound sound = Sound.ENTITY_VILLAGER_NO;
             player.playSound(location, sound, 0.5F, 0.5F);
-            String actionbarMessage = FilesManager.messages.getString("essentials.basic.without-permission");
+            String actionbarMessage = FilesManager.messages.getString("messages.basic.without-permission");
             actionbarMessage = actionbarMessage.replace("&", "§");
             player.sendActionBar(actionbarMessage);
             return false;
