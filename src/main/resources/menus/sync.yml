@@ -34,7 +34,8 @@ menu:
       lore:
         - '&7Opções de sincronização com o Discord!'
         - ''
-        - '&7Conta atual: &9{discord}'
+        - '&7Conta Atual:'
+        - '&7■&e {discord}'
 
     sync:
       slot: 16
