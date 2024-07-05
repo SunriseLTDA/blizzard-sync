@@ -4,6 +4,7 @@ import me.lucwsh.blizzardsync.apis.SyncAPI;
 import me.lucwsh.blizzardsync.inventories.items.SyncItems;
 import me.lucwsh.blizzardsync.managers.FilesManager;
 import me.lucwsh.blizzardsync.utils.CustomHolder;
+import me.lucwsh.blizzardsync.utils.SyncUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -19,9 +20,10 @@ import java.util.List;
 
 public class SyncInventory implements Listener {
 
+    SyncAPI syncAPI = new SyncAPI();
+
     public static void open(Player player) {
-        Boolean allowInteraction = FilesManager.syncMenu.getBoolean("menu.allow-interaction");
-        CustomHolder customHolder = new CustomHolder(allowInteraction);
+        CustomHolder customHolder = new CustomHolder(false);
 
         String displayName = FilesManager.syncMenu.getString("menu.name").replace("&", "§");
         int rows = FilesManager.syncMenu.getInt("menu.rows");
@@ -82,8 +84,14 @@ public class SyncInventory implements Listener {
                 player.getOpenInventory().close();
                 player.performCommand("discord");
             } else if (slot == syncSlot) {
-                player.getOpenInventory().close();
-                player.sendMessage("Digite seu nome de usuário do Discord no chat para receber uma mensagem de verificação.");
+                if (!syncAPI.isUserSynced(player)) {
+                    player.getOpenInventory().close();
+                    String securityCode = SyncUtils.generateSecurityCode(player, 5);
+                    player.sendMessage("Seu código de verificação é: " + securityCode);
+                } else {
+                    player.getOpenInventory().close();
+                    player.sendMessage("To fazeno ainda!");
+                }
             }
         }
     }

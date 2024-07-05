@@ -11,3 +11,8 @@ mysql:
   port: 3306
   username: 'u1176_koWDXnIP9A'
   password: 'YVktyK!7GKL=+HakC6c2uZTo'
+
+tasks:
+  clear-security-codes: 60 # in seconds
+  database-save: 60 # in sceonds
+  users-verify: 120 # in seconds

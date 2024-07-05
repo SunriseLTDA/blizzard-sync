@@ -16,8 +16,6 @@ public class FilesManager {
             loadDiscord();
             loadPermissions();
 
-            Bukkit.getConsoleSender().sendMessage("§a[Sync] §fIn total, [4] files were loaded successfully!");
-
         } catch (Exception ex) {
             ex.printStackTrace();
             Bukkit.getConsoleSender().sendMessage("§a[Sync] §fAn error occurred while loading the files!");

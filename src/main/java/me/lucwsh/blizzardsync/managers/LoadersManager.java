@@ -41,8 +41,6 @@ public class LoadersManager {
             Main.instance.getCommand("sync").setExecutor(new SyncCommand());
             Main.instance.getCommand("discord").setExecutor(new DiscordCommand());
 
-            Bukkit.getConsoleSender().sendMessage("§a[Sync] §fIn total, [2] commands were loaded successfully");
-
         } catch (Exception ex) {
             ex.printStackTrace();
             Bukkit.getConsoleSender().sendMessage("§a[Sync] §fAn error occurred while loading the commands!");
@@ -54,8 +52,6 @@ public class LoadersManager {
             Bukkit.getPluginManager().registerEvents(new InventoryListener(), Main.instance);
             Bukkit.getPluginManager().registerEvents(new SyncInventory(), Main.instance);
             Bukkit.getPluginManager().registerEvents(new PlayerListener(), Main.instance);
-
-            Bukkit.getConsoleSender().sendMessage("§a[Sync] §fIn total, [3] listeners were loaded successfully");
 
         } catch (Exception ex) {
             ex.printStackTrace();

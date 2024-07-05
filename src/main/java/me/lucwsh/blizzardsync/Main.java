@@ -1,11 +1,13 @@
 package me.lucwsh.blizzardsync;
 
 import lombok.SneakyThrows;
+import me.lucwsh.blizzardsync.apis.SyncAPI;
 import me.lucwsh.blizzardsync.database.DatabaseManager;
 import me.lucwsh.blizzardsync.discord.DiscordClient;
 import me.lucwsh.blizzardsync.managers.FilesManager;
 import me.lucwsh.blizzardsync.managers.LoadersManager;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Main extends JavaPlugin {
@@ -41,6 +43,15 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
+
+        SyncAPI syncAPI = new SyncAPI();
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (syncAPI.getSecurity(player) != null) {
+                syncAPI.setSecurity(player, null);
+            }
+        }
+
         DatabaseManager.disconnect();
         DiscordClient.shutdown();
         Bukkit.getConsoleSender().sendMessage("§a[Sync] §fPlugin disabled!");
