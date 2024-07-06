@@ -30,6 +30,17 @@ messages:
       - '&7 Você abriu o menu'
       - '&7 de sincronização.'
       - ''
+    security-code:
+      - ''
+      - '&9 &lSINCRONIZACAO!'
+      - '&7 Seu código de segurança é:'
+      - ''
+      - '&7 ■&9 {code}&7'
+      - ''
+      - '&7 Em nosso Discord, utilize'
+      - '&7 o comando &9/sync &7para'
+      - '&7 concluir sua sincronização.'
+      - ''
     synced:
       - ''
       - '&9 &lSINCRONIZACAO!'

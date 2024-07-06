@@ -15,6 +15,7 @@ public class FilesManager {
             loadLinkMenu();
             loadDiscord();
             loadPermissions();
+            loadRoles();
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -53,6 +54,10 @@ public class FilesManager {
 
     public static void loadDiscord() {
         discord = FilesUtil.createFile(Main.instance, "discord.yml", false);
+    }
+
+    public static void loadRoles() {
+        roles = FilesUtil.createFile(Main.instance, "roles.yml", false);
     }
 
 }

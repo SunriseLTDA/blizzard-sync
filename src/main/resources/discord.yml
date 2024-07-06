@@ -13,7 +13,7 @@ discord:
   commands:
 
     without-permission: ':x: Você não tem permissão para utilizar esse comando!'
-    only-server: ':x: Eu só posso executar esse comando no servidor do SunriseMC!'
+    only-server: ':x: Eu só posso executar esse comando no servidor SunriseMC!'
 
     ping:
       ephemeral: true
@@ -27,18 +27,18 @@ discord:
       ephemeral: true
       message: ':white_check_mark: O jogador **{player}** foi desvinculado da conta **{discord}** com sucesso!'
       player-not-found: ':x: O jogador **{player}** não foi encontrado no servidor!'
+      discord-not-found: ':x: O usuário com o ID **{discord}** não foi encontrado!'
     sync:
       ephemeral: true
-      message: ':white_check_mark: O jogador **{player}** foi vinculado com sucesso!'
+      message: ':white_check_mark: Você foi sincronizado ao  jogador **{player}** com sucesso!'
       player-not-found: ':x: O jogador **{player}** não foi encontrado no servidor!'
-      security-not-found: ':x: O código de segurança **{player}** é inválido ou incorreto!'
-      already-synced: ':x: A conta **{player}** já está vinculada!'
+      security-not-found: ':x: O código de segurança **{code}** é inválido ou incorreto!'
+      already-synced: ':x: O jogador **{player}** já está sincronizado à uma conta!'
     unsync:
       ephemeral: true
-      message: ':white_check_mark: O jogador **{player}** foi vinculado com sucesso!'
+      message: ':white_check_mark: O jogador **{player}** foi dessincronizado da sua conta com sucesso!'
       player-not-found: ':x: O jogador **{player}** não foi encontrado no servidor!'
-      security-not-found: ':x: O código de segurança **{player}** é inválido ou incorreto!'
-      already-synced: ':x: A conta **{player}** já está vinculada!'
+      not-synced: ':x: A sua conta não está sincronizada ao jogador **{player}**!'
 
   embeds:
 

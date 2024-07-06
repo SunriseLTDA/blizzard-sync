@@ -30,7 +30,7 @@ public class PlayerListener implements Listener {
         String playerName = event.getPlayer().getName();
         UserManager user = LoadersManager.userCache.getOrCreate(playerName);
         if (user.getSecurity() != null) {
-            user.setSecurity("Nenhuma");
+            user.setSecurity("Nenhum");
         }
     }
 

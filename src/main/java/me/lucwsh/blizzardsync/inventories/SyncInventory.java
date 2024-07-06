@@ -1,10 +1,12 @@
 package me.lucwsh.blizzardsync.inventories;
 
 import me.lucwsh.blizzardsync.apis.SyncAPI;
+import me.lucwsh.blizzardsync.discord.DiscordClient;
 import me.lucwsh.blizzardsync.inventories.items.SyncItems;
 import me.lucwsh.blizzardsync.managers.FilesManager;
 import me.lucwsh.blizzardsync.utils.CustomHolder;
 import me.lucwsh.blizzardsync.utils.SyncUtils;
+import net.dv8tion.jda.api.entities.User;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -16,9 +18,14 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SyncInventory implements Listener {
+
+    public static final Map<Player, Inventory> openMenus = new HashMap<>();
 
     SyncAPI syncAPI = new SyncAPI();
 
@@ -39,14 +46,21 @@ public class SyncInventory implements Listener {
 
         SyncAPI api = new SyncAPI();
         Boolean synced = api.isUserSynced(player);
-        String username = api.getAccount(player);
+        String userID = api.getAccount(player);
+
+        User username;
+        if (!userID.equals("Nenhuma")) {
+            username = DiscordClient.jda.retrieveUserById(userID).complete();
+        } else {
+            username = null;
+        }
 
         inventory.setItem(slotD, SyncItems.discordItem());
 
         ItemStack infoItem = SyncItems.infoItem();
         ItemMeta infoMeta = infoItem.getItemMeta();
         List<String> lore = infoMeta.getLore();
-        lore.replaceAll(line -> line.replace("{discord}", username));
+        lore.replaceAll(line -> line.replace("{discord}", username != null ? username.getName() : "Nenhuma"));
         infoMeta.setLore(lore);
         infoItem.setItemMeta(infoMeta);
 
@@ -55,6 +69,7 @@ public class SyncInventory implements Listener {
         inventory.setItem(slotS, synced ? SyncItems.unSyncItem() : SyncItems.syncItem());
 
         player.openInventory(inventory);
+        openMenus.put(player, inventory);
     }
 
     @EventHandler
@@ -87,7 +102,12 @@ public class SyncInventory implements Listener {
                 if (!syncAPI.isUserSynced(player)) {
                     player.getOpenInventory().close();
                     String securityCode = SyncUtils.generateSecurityCode(player, 5);
-                    player.sendMessage("Seu código de verificação é: " + securityCode);
+
+                    ArrayList<String> array = new ArrayList<>(FilesManager.messages.getStringList("messages.sync.security-code"));
+                    array.replaceAll(line -> line.replace("{code}", securityCode).replace("&", "§"));
+                    for (String string : array) {
+                        player.sendMessage(string);
+                    }
                 } else {
                     player.getOpenInventory().close();
                     player.sendMessage("To fazeno ainda!");

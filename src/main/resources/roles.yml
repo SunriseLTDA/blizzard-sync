@@ -5,12 +5,16 @@
 #  | |_) | |____ _| |_ / /__ / /__ / ____ \| | \ \| |__| |
 #  |____/|______|_____/_____/_____/_/    \_|_|  \_|_____/
 
+sync-options:
+  role-id: '1210984432308191252'
+  update-name: true
+
 roles:
 
-  synced:
-    id: ''
+  default:
+    id: '1103122128368304130'
+    permission: 'blizzard-sync.roles.default'
 
   vip:
-    order: 1
-    id: ''
-    permission: ''
+    id: '1103122712538386463'
+    permission: 'blizzard-sync.roles.vip'

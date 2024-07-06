@@ -1,9 +1,9 @@
 package me.lucwsh.blizzardsync;
 
-import lombok.SneakyThrows;
 import me.lucwsh.blizzardsync.apis.SyncAPI;
 import me.lucwsh.blizzardsync.database.DatabaseManager;
 import me.lucwsh.blizzardsync.discord.DiscordClient;
+import me.lucwsh.blizzardsync.inventories.SyncInventory;
 import me.lucwsh.blizzardsync.managers.FilesManager;
 import me.lucwsh.blizzardsync.managers.LoadersManager;
 import org.bukkit.Bukkit;
@@ -14,7 +14,6 @@ public final class Main extends JavaPlugin {
 
     public static Main instance;
 
-    @SneakyThrows
     @Override
     public void onEnable() {
         instance = this;
@@ -36,7 +35,6 @@ public final class Main extends JavaPlugin {
         LoadersManager.registerListeners();
         LoadersManager.registerBot();
 
-
         Bukkit.getConsoleSender().sendMessage("§a[Sync] §fPlugin started!");
 
     }
@@ -47,13 +45,26 @@ public final class Main extends JavaPlugin {
         SyncAPI syncAPI = new SyncAPI();
 
         for (Player player : Bukkit.getOnlinePlayers()) {
-            if (syncAPI.getSecurity(player) != null) {
-                syncAPI.setSecurity(player, null);
+            if (SyncInventory.openMenus.containsKey(player)) {
+                player.getOpenInventory().close();
             }
         }
 
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (syncAPI.getSecurity(player) != null) {
+                syncAPI.setSecurity(player, "Nenhum");
+            }
+        }
+
+        try {
+            DiscordClient.shutdown();
+        } catch (Exception ex) {
+            Bukkit.getConsoleSender().sendMessage("§a[Sync] §fBot did not shut down correctly!");
+            ex.printStackTrace();
+        }
+
         DatabaseManager.disconnect();
-        DiscordClient.shutdown();
+
         Bukkit.getConsoleSender().sendMessage("§a[Sync] §fPlugin disabled!");
     }
 }

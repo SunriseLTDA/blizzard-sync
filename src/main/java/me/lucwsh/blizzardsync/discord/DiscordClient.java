@@ -1,5 +1,6 @@
 package me.lucwsh.blizzardsync.discord;
 
+import me.lucwsh.blizzardsync.apis.SyncAPI;
 import me.lucwsh.blizzardsync.discord.listeners.SlashCommandListener;
 import me.lucwsh.blizzardsync.managers.FilesManager;
 import net.dv8tion.jda.api.JDA;
@@ -7,9 +8,11 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import org.bukkit.entity.Player;
 
 import javax.security.auth.login.LoginException;
 
@@ -27,7 +30,7 @@ public class DiscordClient {
                 new SlashCommandListener()
         );
         builder.setStatus(OnlineStatus.IDLE);
-        builder.setActivity(Activity.watching("Sincronize sua conta!"));
+        builder.setActivity(Activity.watching("sincronize sua conta!"));
         jda = builder.build();
 
         jda.updateCommands().addCommands(
@@ -39,22 +42,19 @@ public class DiscordClient {
 
                 Commands.slash("forcesync", "Sincronize um jogador.")
                         .addOption(OptionType.STRING, "player", "Nome do jogador.", true)
-                        .addOption(OptionType.STRING, "discord-id", "Nome da conta do Discord do jogador.", true),
+                        .addOption(OptionType.STRING, "discord-id", "ID da conta do Discord do jogador.", true),
 
                 Commands.slash("forceunsync", "Dessincronize um jogador.")
-                        .addOption(OptionType.STRING, "player", "Player's name.", true)
+                        .addOption(OptionType.STRING, "player", "Player's name.", true),
 
-//                Commands.slash("unsync", "Dessincronize sua conta.")
-//                        .addOption(OptionType.STRING, "player", "Seu nick in-game.", true)
+                Commands.slash("unsync", "Dessincronize sua conta.")
+                        .addOption(OptionType.STRING, "player", "Seu nick in-game.", true)
 
         ).queue();
     }
 
-    // public static void updateUser() {}
 
     public static void shutdown() {
-        if (jda != null) {
             jda.shutdown();
-        }
     }
 }
