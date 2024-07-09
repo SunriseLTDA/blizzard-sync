@@ -1,0 +1,48 @@
+#  ____  _      _____ ____________         _____  _____
+#  |  _ \| |    |_   _|___  |___  /   /\   |  __ \|  __ \
+#  | |_) | |      | |    / /   / /   /  \  | |__) | |  | |
+#  |  _ <| |      | |   / /   / /   / /\ \ |  _  /| |  | |
+#  | |_) | |____ _| |_ / /__ / /__ / ____ \| | \ \| |__| |
+#  |____/|______|_____/_____/_____/_/    \_|_|  \_|_____/
+
+discord:
+
+  app-token: ''
+  server-id: ''
+
+  commands:
+
+    without-permission: ':x: Você não tem permissão para utilizar esse comando!'
+    only-server: ':x: Eu só posso executar esse comando no servidor SunriseMC!'
+
+    ping:
+      ephemeral: false
+      message: ':white_check_mark: O ping do bot é de **{ping}ms**'
+
+    sync:
+      ephemeral: true
+      message: ':white_check_mark: Você foi sincronizado ao  jogador **{player}** com sucesso!'
+      player-not-found: ':x: O jogador **{player}** não foi encontrado no servidor!'
+      security-not-found: ':x: O código de segurança **{code}** é inválido ou incorreto!'
+      already-synced: ':x: O jogador **{player}** já está sincronizado à uma conta!'
+
+    unsync:
+      use: true
+      ephemeral: true
+      message: ':white_check_mark: O jogador **{player}** foi dessincronizado da sua conta com sucesso!'
+      player-not-found: ':x: O jogador **{player}** não foi encontrado no servidor!'
+      not-synced: ':x: A sua conta não está sincronizada ao jogador **{player}**!'
+      cannot-use: ':x: Você não pode utilizar esse comando!'
+
+    forcesync:
+      ephemeral: true
+      message: ':white_check_mark: O jogador **{player}** foi vinculado à conta **{discord}** com sucesso!'
+      player-not-found: ':x: O jogador **{player}** não foi encontrado no servidor!'
+      discord-not-found: ':x: O usuário com o ID **{discord}** não foi encontrado!'
+
+    forceunsync:
+      ephemeral: true
+      message: ':white_check_mark: O jogador **{player}** foi desvinculado da conta **{discord}** com sucesso!'
+      player-not-found: ':x: O jogador **{player}** não foi encontrado no servidor!'
+      discord-not-found: ':x: O usuário com o ID **{discord}** não foi encontrado!'
+

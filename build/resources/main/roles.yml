@@ -1,0 +1,36 @@
+#  ____  _      _____ ____________         _____  _____
+#  |  _ \| |    |_   _|___  |___  /   /\   |  __ \|  __ \
+#  | |_) | |      | |    / /   / /   /  \  | |__) | |  | |
+#  |  _ <| |      | |   / /   / /   / /\ \ |  _  /| |  | |
+#  | |_) | |____ _| |_ / /__ / /__ / ____ \| | \ \| |__| |
+#  |____/|______|_____/_____/_____/_/    \_|_|  \_|_____/
+
+sync-options:
+  role-id: '1210984432308191252'
+  update-name: true
+
+roles:
+
+  default:
+    id: '1103122128368304130'
+    permission: 'blizzard-sync.roles.default'
+
+  vip:
+    id: '1103122712538386463'
+    permission: 'blizzard-sync.roles.vip'
+
+  mvp:
+    id: '1103122752539459666'
+    permission: 'blizzard-sync.roles.mvp'
+
+  mvp+:
+    id: '1103122821011476551'
+    permission: 'blizzard-sync.roles.mvp+'
+
+  valhalla:
+    id: '1124102986004709537'
+    permission: 'blizzard-sync.roles.valhalla'
+
+  sunrise:
+    id: '1103122788983779469'
+    permission: 'blizzard-sync.roles.sunrise'
