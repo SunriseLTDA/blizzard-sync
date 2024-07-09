@@ -16,7 +16,9 @@ public class AutoSaveTask implements Runnable{
         this.userCache = userCache;
         this.databaseHandler = databaseHandler;
 
-        main.getServer().getScheduler().runTaskTimerAsynchronously(main, this, 0L, 60L);
+        int task = main.instance.getConfig().getInt("tasks.database-save");
+
+        main.getServer().getScheduler().runTaskTimerAsynchronously(main, this, 0L, task * 20);
     }
 
 

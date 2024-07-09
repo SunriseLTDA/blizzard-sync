@@ -8,7 +8,8 @@
 permissions:
 
   sync:
-    use: 'sync.command.main.use'
+    use-sync: 'sync.command.main.use-sync'
+    use-unsync: 'sync.command.main.use-unsync'
     operator: 'sync.command.main.operator'
 
   discord:

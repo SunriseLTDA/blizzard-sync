@@ -1,7 +1,6 @@
 package me.lucwsh.blizzardsync.discord.listeners;
 
 import me.lucwsh.blizzardsync.apis.SyncAPI;
-import me.lucwsh.blizzardsync.discord.DiscordClient;
 import me.lucwsh.blizzardsync.discord.roles.RolesUtils;
 import me.lucwsh.blizzardsync.managers.FilesManager;
 import net.dv8tion.jda.api.Permission;
@@ -63,15 +62,25 @@ public class SlashCommandListener extends ListenerAdapter {
 
                 syncAPI.syncUser(player, syncMemberID);
                 syncAPI.resetSecurity(player);
-                RolesUtils.setSyncOptions(player, syncMemberID);
                 RolesUtils.addRoles(player, syncMemberID);
+                RolesUtils.setSyncOptions(player, syncMemberID);
+
                 event.getHook().sendMessage(FilesManager.discord.getString("discord.commands.sync.message").replace("{player}", player.getName())).setEphemeral(true).queue();
+
+                RolesUtils.executeRewards(player);
                 break;
 
             case "unsync":
                 Boolean ephemeralUS = FilesManager.discord.getBoolean("discord.commands.unsync.ephemeral");
                 event.deferReply(ephemeralUS).queue();
                 String unSyncPlayerName = event.getOption("player").getAsString();
+
+                Boolean option = FilesManager.discord.getBoolean("discord.commands.unsync.use");
+
+                if (!option) {
+                    event.getHook().sendMessage(FilesManager.discord.getString("discord.commands.unsync.cannot-use")).queue();
+                    return;
+                }
 
                 Player unSyncPlayer = Bukkit.getPlayer(unSyncPlayerName);
 
@@ -86,8 +95,8 @@ public class SlashCommandListener extends ListenerAdapter {
 
                 if (unSyncUserID.equals(unSyncPlayerID)) {
                     syncAPI.unSyncUser(unSyncPlayer);
-                    RolesUtils.unSetSyncOptions(unSyncPlayerID);
                     RolesUtils.removeRoles(unSyncPlayer, unSyncPlayerID);
+                    RolesUtils.unSetSyncOptions(unSyncPlayerID);
                     event.getHook().sendMessage(FilesManager.discord.getString("discord.commands.unsync.message").replace("{player}", unSyncPlayer.getName())).setEphemeral(true).queue();
                 } else {
                     event.getHook().sendMessage(FilesManager.discord.getString("discord.commands.unsync.not-synced").replace("{player}", unSyncPlayerName)).setEphemeral(true).queue();
@@ -126,12 +135,12 @@ public class SlashCommandListener extends ListenerAdapter {
                 }
 
                 syncAPI.syncUser(forceSyncPlayer, forceSyncMember.getUser().getId());
+                RolesUtils.addRoles(forceSyncPlayer, forceSyncMember.getUser().getId());
+                RolesUtils.setSyncOptions(forceSyncPlayer, forceSyncMember.getUser().getId());
                 event.getHook().sendMessage(FilesManager.discord.getString("discord.commands.forcesync.message").replace("{player}", forceSyncPlayer.getName()).replace("{discord}", forceSyncMember.getUser().getName())).setEphemeral(ephemeralFS).queue();
                 break;
 
             case "forceunsync":
-
-                // arrumar verificação
 
                 Boolean ephemeralFUS = FilesManager.discord.getBoolean("discord.commands.forceunsync.ephemeral");
                 event.deferReply(ephemeralFUS).queue();
@@ -155,8 +164,9 @@ public class SlashCommandListener extends ListenerAdapter {
                     event.getHook().sendMessage(FilesManager.discord.getString("discord.commands.forceunsync.discord-not-found").replace("{discord}", forceUnSyncDiscord)).queue();
                     return;
                 }
-
                 syncAPI.unSyncUser(forceUnSyncPlayer);
+                RolesUtils.removeRoles(forceUnSyncPlayer, forceUnSyncDiscord);
+                RolesUtils.unSetSyncOptions(forceUnSyncDiscord);
                 event.getHook().sendMessage(FilesManager.discord.getString("discord.commands.forceunsync.message").replace("{player}", forceUnSyncPlayer.getName()).replace("{discord}", forceUnSyncMember.getUser().getName())).queue();
                 break;
 

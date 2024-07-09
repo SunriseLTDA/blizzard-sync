@@ -7,6 +7,7 @@ import me.lucwsh.blizzardsync.commands.SyncCommand;
 import me.lucwsh.blizzardsync.database.DatabaseHandler;
 import me.lucwsh.blizzardsync.database.DatabaseManager;
 import me.lucwsh.blizzardsync.discord.DiscordClient;
+import me.lucwsh.blizzardsync.tasks.RolesTask;
 import me.lucwsh.blizzardsync.inventories.SyncInventory;
 import me.lucwsh.blizzardsync.listeners.InventoryListener;
 import me.lucwsh.blizzardsync.listeners.PlayerListener;
@@ -77,6 +78,7 @@ public class LoadersManager {
 
     public static void registerTasks() {
         new AutoSaveTask(Main.instance, userCache, databaseHandler);
+        new RolesTask().runTaskTimer(Main.instance, 0L, 20L * Main.instance.getConfig().getInt("tasks.users-verify"));
     }
 
     public static void registerConfig() {

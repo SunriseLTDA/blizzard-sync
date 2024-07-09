@@ -30,7 +30,7 @@ public class DiscordClient {
                 new SlashCommandListener()
         );
         builder.setStatus(OnlineStatus.IDLE);
-        builder.setActivity(Activity.watching("sincronize sua conta!"));
+        builder.setActivity(Activity.watching("Sincronize sua conta!"));
         jda = builder.build();
 
         jda.updateCommands().addCommands(

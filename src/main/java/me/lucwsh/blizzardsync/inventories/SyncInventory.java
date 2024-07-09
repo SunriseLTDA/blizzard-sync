@@ -2,9 +2,11 @@ package me.lucwsh.blizzardsync.inventories;
 
 import me.lucwsh.blizzardsync.apis.SyncAPI;
 import me.lucwsh.blizzardsync.discord.DiscordClient;
+import me.lucwsh.blizzardsync.discord.roles.RolesUtils;
 import me.lucwsh.blizzardsync.inventories.items.SyncItems;
 import me.lucwsh.blizzardsync.managers.FilesManager;
 import me.lucwsh.blizzardsync.utils.CustomHolder;
+import me.lucwsh.blizzardsync.utils.PermissionChecker;
 import me.lucwsh.blizzardsync.utils.SyncUtils;
 import net.dv8tion.jda.api.entities.User;
 import org.bukkit.Bukkit;
@@ -98,19 +100,38 @@ public class SyncInventory implements Listener {
             if (slot == discordSlot) {
                 player.getOpenInventory().close();
                 player.performCommand("discord");
+
             } else if (slot == syncSlot) {
                 if (!syncAPI.isUserSynced(player)) {
                     player.getOpenInventory().close();
                     String securityCode = SyncUtils.generateSecurityCode(player, 5);
 
-                    ArrayList<String> array = new ArrayList<>(FilesManager.messages.getStringList("messages.sync.security-code"));
-                    array.replaceAll(line -> line.replace("{code}", securityCode).replace("&", "§"));
-                    for (String string : array) {
+                    ArrayList<String> sync = new ArrayList<>(FilesManager.messages.getStringList("messages.sync.security-code"));
+                    sync.replaceAll(line -> line.replace("{code}", securityCode).replace("&", "§"));
+                    for (String string : sync) {
                         player.sendMessage(string);
                     }
+
                 } else {
+                    if (!PermissionChecker.hasPermission(player, FilesManager.permissions.getString("permissions.sync.use-sync"))) {
+                        return;
+                    }
+
                     player.getOpenInventory().close();
-                    player.sendMessage("To fazeno ainda!");
+
+                    String discordID = syncAPI.getAccount(player);
+                    User discordUser = DiscordClient.jda.retrieveUserById(discordID).complete();
+                    String discordName = discordUser.getName();
+
+                    ArrayList<String> unsync = new ArrayList<>(FilesManager.messages.getStringList("messages.sync.unsynced"));
+                    unsync.replaceAll(line -> line.replace("{discord}", discordName).replace("&", "§"));
+                    for (String string : unsync) {
+                        player.sendMessage(string);
+                    }
+
+                    RolesUtils.removeRoles(player, discordUser.getId());
+                    RolesUtils.unSetSyncOptions(discordUser.getId());
+                    syncAPI.unSyncUser(player);
                 }
             }
         }

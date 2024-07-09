@@ -18,6 +18,18 @@ messages:
       - ''
 
   sync:
+    use:
+      - ''
+      - '&9 &lSINCRONIZACAO!'
+      - '&7 Utilize: &9/sync&7.'
+      - ''
+    use-operator:
+      - ''
+      - '&9 &lSINCRONIZACAO!'
+      - '&7 Utilize:'
+      - '&9 /sync <forcesync> <player> <discord>&7.'
+      - '&9 /sync <forceunsync> <player>&7.'
+      - ''
     not-synced:
       - ''
       - '&9 &lSINCRONIZACAO!'

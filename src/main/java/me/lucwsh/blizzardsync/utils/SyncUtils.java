@@ -16,12 +16,14 @@ public class SyncUtils {
         SyncAPI syncAPI = new SyncAPI();
         syncAPI.setSecurity(player, securityCode);
 
+        int task = Main.instance.getConfig().getInt("tasks.clear-security-codes");
+
         new BukkitRunnable() {
             @Override
             public void run() {
                 syncAPI.resetSecurity(player);
             }
-        }.runTaskLaterAsynchronously(Main.instance, 30 * 20L);
+        }.runTaskLaterAsynchronously(Main.instance, task * 20L);
 
         return securityCode;
     }

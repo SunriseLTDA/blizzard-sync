@@ -22,7 +22,7 @@ public class DiscordCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (!PermissionChecker.hasPermission(player, "permissions.discord.use")) {
+        if (!PermissionChecker.hasPermission(player, FilesManager.permissions.getString("permissions.discord.use"))) {
             return true;
         }
 

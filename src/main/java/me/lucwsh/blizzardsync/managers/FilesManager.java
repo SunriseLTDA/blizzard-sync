@@ -16,6 +16,7 @@ public class FilesManager {
             loadDiscord();
             loadPermissions();
             loadRoles();
+            loadRewards();
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -58,6 +59,14 @@ public class FilesManager {
 
     public static void loadRoles() {
         roles = FilesUtil.createFile(Main.instance, "roles.yml", false);
+    }
+
+    // Rewards
+
+    public static YamlConfiguration rewards;
+
+    public static void loadRewards() {
+        rewards = FilesUtil.createFile(Main.instance, "rewards.yml", false);
     }
 
 }

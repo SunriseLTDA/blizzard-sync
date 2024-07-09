@@ -18,3 +18,19 @@ roles:
   vip:
     id: '1103122712538386463'
     permission: 'blizzard-sync.roles.vip'
+
+  mvp:
+    id: '1103122752539459666'
+    permission: 'blizzard-sync.roles.mvp'
+
+  mvp+:
+    id: '1103122821011476551'
+    permission: 'blizzard-sync.roles.mvp+'
+
+  valhalla:
+    id: '1124102986004709537'
+    permission: 'blizzard-sync.roles.valhalla'
+
+  sunrise:
+    id: '1103122788983779469'
+    permission: 'blizzard-sync.roles.sunrise'
